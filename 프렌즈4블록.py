@@ -32,5 +32,3 @@ def solution(m, n, board):
             break
 
     return cnt
-
-print(solution(6,6,["TTTANT", "RRFACC", "RRRFCC", "TRRRAA", "TTMMMF", "TMMTTJ"]))

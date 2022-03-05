@@ -1,7 +1,3 @@
-n = int(input())
-arr1 = [int(input()) for _ in range(n)]
-arr2 = [int(input()) for _ in range(n)]
-
 def solution(n, arr1, arr2):
     answer = []
     for i in range(n):

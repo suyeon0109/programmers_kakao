@@ -28,7 +28,7 @@ def solution(str1, str2):
     for k in range(len(lb)):
         lb[k] = lb[k].lower()
 
-    for q in la[:]:
+    for q in la:
         if q in lb:
             lc.append(q)
             lb.remove(q)
