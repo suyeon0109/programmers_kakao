@@ -1,36 +1,42 @@
-def solution(m, n, board):
-    la = [[] for _ in range(n)]
-    cnt = 0
+def solution(n, t, m, table):
 
-    for i in range(n):
-        for t in range(m-1,-1,-1):
-            la[i].append(board[t][i])
+    for j in range(len(table)):
+        table[j] = (int(table[j][:2]),int(table[j][3:]))
+    table.sort()
 
-    while 1:
-        lb = []
-        for j in range(n-1):
-            for k in range(len(la[j])-1):
-                if la[j][k] == la[j][k+1]:
-                    try:
-                        if la[j][k] == la[j+1][k] == la[j+1][k+1]:
-                            lb.append((j,k))
-                            lb.append((j,k+1))
-                            lb.append((j+1,k))
-                            lb.append((j+1,k+1))
-                    except:
-                        pass
-        cnt += len(set(lb))
+    all = 0
+    s = (9,0)
+    bus = 1
+    while bus <= n:
+        cnt = 0
+        for i in table[:]:
 
-        for x,y in set(lb):
-            la[x][y] = 0
+            if i[0] < s[0]:
+                cnt += 1
+                all += 1
+                last = i
+                table.remove(i)
+            elif i[0] == s[0]:
+                if i[1] <= s[1]:
+                    cnt += 1
+                    all += 1
+                    last = i
+                    table.remove(i)
+            if cnt == m:
+                break
 
-        for s in la:
-            while 0 in s:
-                s.remove(0)
+        if s[1]+t >= 60:
+            s = (s[0] + 1, s[1]+ t - 60)
+        else:
+            s = (s[0] , s[1]+t)
+        bus += 1
+    
+    if cnt == m:
+        if last[1] == 0:
+            return str(last[0]-1).zfill(2) + ':59'
+        else:
+            return str(last[0]).zfill(2) + ':' + str(last[1]-1).zfill(2)
+    else:
+        return str(9 + t*(n-1)//60).zfill(2) + ':' + str(t*(n-1)%60).zfill(2)
 
-        if len(set(lb)) == 0:
-            break
-
-    return cnt
-
-print(solution(6,6,["TTTANT", "RRFACC", "RRRFCC", "TRRRAA", "TTMMMF", "TMMTTJ"]))
+print(solution(2,10,2, ["09:10", "09:09", "08:00"]))
